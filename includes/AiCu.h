@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AiCu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:26:47 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 18:14:15 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/19 23:55:58 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,3 +45,5 @@ void	ft_error(char *msg);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(char *nbr);
 void	ft_putnbr(int nbr);
+
+int openGraphicsWindow();

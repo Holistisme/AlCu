@@ -1,5 +1,19 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/01/20 00:04:27 by aheitz            #+#    #+#              #
+#    Updated: 2026/01/20 00:04:46 by aheitz           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #Sources
 SRCS_DIR 	= srcs/
+
+LDLIBS		= -Lraylib/src -lraylib -lGL -lm -ldl -lpthread -lrt -lX11
 
 SRC			= main.c
 			  
@@ -15,9 +29,13 @@ SRC_PAR	 	= parsing.c
 SRC_GAM_DIR	= game/
 SRC_GAM	 	= Ai.c
 
+SRC_GRAPH_DIR	= graphics/
+SRC_GRAPH	 	= open.c
+
 SRC			+= $(addprefix ${SRC_UTI_DIR}, ${SRC_UTI})
 SRC			+= $(addprefix ${SRC_PAR_DIR}, ${SRC_PAR})
 SRC			+= $(addprefix ${SRC_GAM_DIR}, ${SRC_GAM})
+SRC			+= $(addprefix ${SRC_GRAPH_DIR}, ${SRC_GRAPH})
 SRCS		= $(addprefix ${SRCS_DIR}, ${SRC})
 
 #Object
@@ -58,7 +76,7 @@ ${OBJS_DIR}%.o: ${SRCS_DIR}%.c | ${OBJS_DIR}
 				@${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME}:		${OBJS}
-				@${CC} ${CFLAGS} ${OBJS} -o $@
+				@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o $@
 				@echo "${YELLOW}'$@' is compiled ! ✅${RESET}"
 
 ${OBJS_DIR}:
@@ -86,5 +104,11 @@ head:
 				@echo "${YELLOW}     Nim Game - AI Strategy${RESET}"
 				@echo
 
-.PHONY:			all clean fclean re head
+bonus:
+	$(MAKE) -C raylib/src PLATFORM=PLATFORM_DESKTOP
+
+bonus_clean:
+	$(MAKE) -C raylib/src clean
+
+.PHONY:			all clean fclean re head bonus
 
