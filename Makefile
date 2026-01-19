@@ -51,7 +51,7 @@ CROSS		= \033[9m
 FLASH		= \033[5m
 NEGATIF		= \033[7m
 
-all:			${NAME}
+all:			head ${NAME}
 
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c | ${OBJS_DIR}
 				@mkdir -p $(dir $@)	
@@ -77,13 +77,13 @@ re:				fclean all
 
 head:			
 				@echo
+				@echo "${CYAN}    ___     _    ______        ${RESET}"
+				@echo "${CYAN}   /   |   (_)  / ____/__  __  ${RESET}"
+				@echo "${CYAN}  / /| |  / /  / /   / / / /  ${RESET}"
+				@echo "${CYAN} / ___ | / /  / /___/ /_/ /   ${RESET}"
+				@echo "${CYAN}/_/  |_|/_/   \____/\__,_/    ${RESET}"
 				@echo
-				@echo "    /|    //| |                                //   ) )  /__  ___/"
-				@echo "   //|   // | |    ( )       __       ( )     //___/ /     / /"
-				@echo "  // |  //  | |   / /     //   ) )   / /     / ___ (      / /"
-				@echo " //  | //   | |  / /     //   / /   / /     //   | |     / /"
-				@echo "//   |//    | | / /     //   / /   / /     //    | |    / /"
-				@echo
+				@echo "${YELLOW}     Nim Game - AI Strategy${RESET}"
 				@echo
 
 .PHONY:			all clean fclean re head
