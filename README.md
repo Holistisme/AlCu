@@ -49,5 +49,5 @@ L'IA utilise une stratégie modulo 4 :
 ## Vérification mémoire
 
 ```bash
-valgrind --leak-check=full --track-fds=yes ./alum1 test
+valgrind --leak-check=full --track-fds=yes ./alum1 map/easy
 ```
