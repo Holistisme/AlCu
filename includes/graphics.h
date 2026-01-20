@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 09:58:09 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/20 13:27:28 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_game {
   Texture2D   backgroundTexture;
   int         clickedSticks[3];
   int         stickSelected;
+  double      startTime;
+  char        aiMessage[256];
 } t_game;
 
 /* ************************************************************************** */
@@ -44,5 +46,7 @@ void drawSticksHeap(t_game *game, int y);
 void stopRender(t_game *game);
 
 void selectStick(t_game *game);
+
+void ft_move_bonus(t_game *game, bool *player_turn, bool *game_over);
 
 /* ************************************************************************** */

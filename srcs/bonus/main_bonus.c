@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/19 15:27:19 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/20 13:11:53 by benpicar         ###   ########.fr       */
+/*   Created: 2026/01/20 11:22:39 by benpicar          #+#    #+#             */
+/*   Updated: 2026/01/20 15:24:41 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AiCu.h"
-#include "graphics.h"
 #include "get_next_line.h"
+#include "graphics.h"
 
 int	main(int ac, char **av)
 {
@@ -31,8 +31,9 @@ int	main(int ac, char **av)
 	}
 	else
 		return (ft_error("ERROR\nUsage: './alum1' or './alum1 [file]'\n"), 1);
-	// renderGraphics(tab);
-	ft_run(tab, max);
+	printf("main %d   %d   %d   %d\n", tab->buf[0], tab->buf[1], tab->buf[2], tab->buf[3]);
+	renderGraphics(tab);
 	ft_free_vector(&tab);
 	return (0);
 }
+

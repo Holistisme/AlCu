@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 03:52:33 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 10:26:36 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/20 13:22:47 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ static void drawStick(t_game *game, Vector3 position, int index) {
     position.z + game->stickBox.max.z * STICK_SCALE,
   };
 
+  // Check if stick is already selected
+  bool is_clicked = false;
   if ((int)position.y == 0)
     for (int i = 0; i < 3; i++)
       if (game->clickedSticks[i] == index)
-        return;
+        is_clicked = true;
 
   if (game->stickSelected == NONE_SELECTED &&
     GetRayCollisionBox(
@@ -78,7 +80,11 @@ static void drawStick(t_game *game, Vector3 position, int index) {
 
     if ((int)position.y == 0)
       game->stickSelected = index;
-  } else DrawModel(game->stickModel, position, STICK_SCALE, WHITE);
+  } else if (is_clicked) {
+    DrawModel(game->selectedStickModel, position, STICK_SCALE, GREEN);
+  } else {
+    DrawModel(game->stickModel, position, STICK_SCALE, WHITE);
+  }
 };
 
 /* ************************************************************************** */

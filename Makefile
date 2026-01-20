@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
+#    By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 00:04:27 by aheitz            #+#    #+#              #
-#    Updated: 2026/01/20 07:23:51 by aheitz           ###   ########.fr        #
+#    Updated: 2026/01/20 13:18:03 by benpicar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Sources
 SRCS_DIR 	= srcs/
 
+RAYLIB		= libraylib.a
 LDLIBS		= -Lraylib/src -lraylib -lGL -lm -ldl -lpthread -lrt -lX11
 
 SRC			= main.c
@@ -34,20 +35,34 @@ SRC_GRAPH		= click.c \
 				close.c   \
 				draw.c    \
 				render.c  \
-				setup.c   \
+				setup.c
+
+SRC_BON_DIR	= bonus/
+SRC_BONN 	= main_bonus.c \
+			  Ai_bonus.c
 
 SRC			+= $(addprefix ${SRC_UTI_DIR}, ${SRC_UTI})
 SRC			+= $(addprefix ${SRC_PAR_DIR}, ${SRC_PAR})
 SRC			+= $(addprefix ${SRC_GAM_DIR}, ${SRC_GAM})
-SRC			+= $(addprefix ${SRC_GRAPH_DIR}, ${SRC_GRAPH})
 SRCS		= $(addprefix ${SRCS_DIR}, ${SRC})
+
+#Bonus
+SRC_BON		= $(addprefix ${SRC_UTI_DIR}, ${SRC_UTI})
+SRC_BON		+= $(addprefix ${SRC_PAR_DIR}, ${SRC_PAR})
+SRC_BON		+= $(addprefix ${SRC_BON_DIR}, ${SRC_BONN})
+SRC_BON		+= $(addprefix ${SRC_GRAPH_DIR}, ${SRC_GRAPH})
+SRC_BON		+= $(addprefix ${SRC_GAM_DIR}, ${SRC_GAM})
+
+SRCS_BON	= $(addprefix ${SRCS_DIR}, ${SRC_BON})
 
 #Object
 OBJS_DIR	= objects/
 OBJS		= $(addprefix ${OBJS_DIR}, ${SRC:.c=.o})
+OBJS_BON	= $(addprefix ${OBJS_DIR}, ${SRC_BON:.c=.o})
 
 INCLUDES	= includes
 NAME		= alum1
+NAME_BON	= alum1_bonus
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -I ${INCLUDES} -I raylib/src -g3 -O3
 CC			= cc
@@ -80,20 +95,20 @@ ${OBJS_DIR}%.o: ${SRCS_DIR}%.c | ${OBJS_DIR}
 				@${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME}:		${OBJS}
-				@${CC} ${CFLAGS} ${OBJS} ${LDLIBS} -o $@
+				@${CC} ${CFLAGS} ${OBJS} -o $@
 				@echo "${YELLOW}'$@' is compiled ! ✅${RESET}"
 
 ${OBJS_DIR}:
 				@mkdir -p ${OBJS_DIR}
 
-clean:
-				@${RM} ${OBJS}
+clean:			raylib_clean
+				@${RM} ${OBJS} ${OBJS_BON}
 				@${RM} -r ${OBJS_DIR}
-				@echo "${RED}'${NAME}' objects are deleted ! 👍${RESET}"
+				@echo "${RED}'${NAME}' and '${NAME_BON}' objects are deleted ! 👍${RESET}"
 
 fclean:			clean
-				@${RM} ${NAME}
-				@echo "${RED}'${NAME}' is deleted ! 👍${RESET}"
+				@${RM} ${NAME} ${NAME_BON}
+				@echo "${RED}'${NAME}' and '${NAME_BON}' are deleted ! 👍${RESET}"
 
 re:				fclean all
 
@@ -108,11 +123,20 @@ head:
 				@echo "${YELLOW}     Nim Game - AI Strategy${RESET}"
 				@echo
 
-bonus:
-	$(MAKE) -C raylib/src PLATFORM=PLATFORM_DESKTOP
+bonus:			head ${RAYLIB} ${NAME_BON}
 
-bonus_clean:
-	$(MAKE) -C raylib/src clean
+${NAME_BON}:	${OBJS_BON}
+				@${CC} ${CFLAGS} ${OBJS_BON} ${LDLIBS} -o $@
+				@echo "${YELLOW}'$@' is compiled ! ✅${RESET}"
 
-.PHONY:			all clean fclean re head bonus
+${RAYLIB}:
+				@$(MAKE) -C raylib/src PLATFORM=PLATFORM_DESKTOP
+				@echo "${GREEN}'${RAYLIB}' library compiled ! ✅${RESET}"
+
+raylib_clean:
+				@$(MAKE) -C raylib/src clean
+
+re_bonus:		fclean bonus
+
+.PHONY:			all clean fclean re head bonus raylib_clean
 

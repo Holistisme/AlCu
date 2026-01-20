@@ -6,7 +6,7 @@
 /*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:22:27 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 19:01:23 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:59:07 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @param	tab	The game board represented as a vector.
  * @param	max	The maximum number of matches in any line.
  */
-void	ft_run(t_vector *tab, int max)
+inline void	ft_run(t_vector *tab, int max)
 {
 	bool	player_turn;
 
@@ -57,7 +57,7 @@ void	ft_run(t_vector *tab, int max)
  * 
  * @param	tab	The game board represented as a vector.
  */
-void	ft_player_move(t_vector *tab)
+inline void	ft_player_move(t_vector *tab)
 {
 	int		line, matches = 0, current_value;
 	char	*input;
@@ -94,7 +94,7 @@ void	ft_player_move(t_vector *tab)
  * @param	tab	The game board represented as a vector.
  * @return	int	Number of matches removed by the AI.
  */
-int	ft_ai_move(t_vector *tab)
+inline int	ft_ai_move(t_vector *tab)
 {
 	int		line, matches, current_value;
 	bool	next_line_is_mod_4;
