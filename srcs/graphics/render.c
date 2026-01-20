@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 23:49:24 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 06:57:54 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/20 10:20:15 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int renderGraphics(t_vector *sticks) {
   if (setupWindow(&game, sticks) == EXIT_FAILURE)
     return EXIT_FAILURE;
 
+  game.clickedSticks[0] = -1;
+  game.clickedSticks[1] = -1; // ? Reset after confirmation
+  game.clickedSticks[2] = -1;
+
   while (!WindowShouldClose())
     updateWindow(&game);
 
@@ -37,12 +41,18 @@ static void inline updateWindow(t_game *game) {
   char buffer[64];
   snprintf(buffer, sizeof(buffer), "+ %d", 42);
 
+  game->stickSelected = -1;
   BeginDrawing();
   ClearBackground(RAYWHITE);
   drawBackground(game->backgroundTexture);
   BeginMode3D(game->camera);
+
   for (size_t i = 0; i < 3; i++)
     drawSticksHeap(game, i);
+
+  if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    selectStick(game);
+
   EndMode3D();
   DrawText(buffer, GetScreenWidth() * 0.925, GetScreenHeight() * 0.725, 50, WHITE);
   EndDrawing();

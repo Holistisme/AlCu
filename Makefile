@@ -6,7 +6,7 @@
 #    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 00:04:27 by aheitz            #+#    #+#              #
-#    Updated: 2026/01/20 06:56:34 by aheitz           ###   ########.fr        #
+#    Updated: 2026/01/20 07:23:51 by aheitz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC_GAM_DIR	= game/
 SRC_GAM	 	= Ai.c
 
 SRC_GRAPH_DIR	= graphics/
-SRC_GRAPH		= close.c \
+SRC_GRAPH		= click.c \
+				close.c   \
 				draw.c    \
 				render.c  \
 				setup.c   \

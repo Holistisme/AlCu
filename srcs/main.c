@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:27:19 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 18:50:42 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:29:05 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AiCu.h"
+#include "graphics.h"
 #include "get_next_line.h"
 
 int	main(int ac, char **av)
@@ -30,6 +31,7 @@ int	main(int ac, char **av)
 	}
 	else
 		return (ft_error("ERROR\nUsage: './alum1' or './alum1 [file]'\n"), 1);
+	renderGraphics(tab);
 	ft_run(tab, max);
 	ft_free_vector(&tab);
 	return (0);
