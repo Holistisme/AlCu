@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:26:47 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 23:55:58 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/20 06:55:43 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,3 @@ void	ft_error(char *msg);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(char *nbr);
 void	ft_putnbr(int nbr);
-
-int openGraphicsWindow();

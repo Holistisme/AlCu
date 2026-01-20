@@ -6,7 +6,7 @@
 #    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 00:04:27 by aheitz            #+#    #+#              #
-#    Updated: 2026/01/20 00:04:46 by aheitz           ###   ########.fr        #
+#    Updated: 2026/01/20 06:56:34 by aheitz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,10 @@ SRC_GAM_DIR	= game/
 SRC_GAM	 	= Ai.c
 
 SRC_GRAPH_DIR	= graphics/
-SRC_GRAPH	 	= open.c
+SRC_GRAPH		= close.c \
+				draw.c    \
+				render.c  \
+				setup.c   \
 
 SRC			+= $(addprefix ${SRC_UTI_DIR}, ${SRC_UTI})
 SRC			+= $(addprefix ${SRC_PAR_DIR}, ${SRC_PAR})
@@ -45,7 +48,7 @@ OBJS		= $(addprefix ${OBJS_DIR}, ${SRC:.c=.o})
 INCLUDES	= includes
 NAME		= alum1
 RM			= rm -f
-CFLAGS		= -Wall -Wextra -Werror -I ${INCLUDES} -g3 -O3
+CFLAGS		= -Wall -Wextra -Werror -I ${INCLUDES} -I raylib/src -g3 -O3
 CC			= cc
 
 #Colors
