@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:21:54 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 03:36:41 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 04:34:02 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void deleteAudio(t_game *game) {
     &game->confirmationSound,
     &game->defeatSound,
     &game->deselectSound,
+    &game->levelingSound,
     &game->selectSound,
     &game->victorySound
   };

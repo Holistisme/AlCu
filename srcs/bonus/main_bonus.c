@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:22:39 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 04:06:12 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 05:29:52 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 
 	if (!tab)
 	{
-		ft_error("ERROR\nCould't allocate memory\n");
+		ft_error();
 		return (1);
 	}
 	if (ac <= 2)
@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 			return (ft_free_vector(&tab), 1);
 	}
 	else
-		return (ft_error("ERROR\nUsage: './alum1' or './alum1 [file]'\n"), 1);
+		return (ft_error(), 1);
 	printf("main %d   %d   %d   %d\n", tab->buf[0], tab->buf[1], tab->buf[2], tab->buf[3]);
 
 	const int status = renderGraphics(tab);

@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 00:58:09 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 04:10:50 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 04:34:28 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static const char *audioFiles[] = {
   "assets/audio/confirm.wav",
   "assets/audio/defeat.wav",
   "assets/audio/deselect.wav",
+  "assets/audio/leveling.wav",
   "assets/audio/select.wav",
   "assets/audio/victory.wav"
 };
@@ -66,6 +67,7 @@ static inline int loadSounds(t_game *game) {
     &game->confirmationSound,
     &game->defeatSound,
     &game->deselectSound,
+    &game->levelingSound,
     &game->selectSound,
     &game->victorySound
   };

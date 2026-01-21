@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:27:19 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/20 13:11:53 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 05:29:43 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 
 	if (!tab)
 	{
-		ft_error("ERROR\nCould't allocate memory\n");
+		ft_error();
 		return (1);
 	}
 	if (ac <= 2)
@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 			return (ft_free_vector(&tab), 1);
 	}
 	else
-		return (ft_error("ERROR\nUsage: './alum1' or './alum1 [file]'\n"), 1);
+		return (ft_error(), 1);
 	// renderGraphics(tab);
 	ft_run(tab, max);
 	ft_free_vector(&tab);

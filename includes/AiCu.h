@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AiCu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:26:47 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/20 12:00:56 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 05:29:35 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_print_board(t_vector *tab, int max);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
-void	ft_error(char *msg);
+void	ft_error(void);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(char *nbr);
 void	ft_putnbr(int nbr);

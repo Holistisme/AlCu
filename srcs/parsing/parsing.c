@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:15:07 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/20 15:29:02 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 05:30:13 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ bool	ft_read_stdin(t_vector *tab, int fd, int *max)
 	{
 		if (buf[0] == '\n' || buf[0] == '\0')
 		{
+			if (!tab->index)
+			{
+				ft_error();
+				return (free(buf), false);
+			};
+
 			free(buf);
 			get_next_line(fd, 1);
 			break ;
@@ -96,13 +102,13 @@ bool	ft_read_stdin(t_vector *tab, int fd, int *max)
 		nbr = ft_atoi(buf);
 		if (nbr < 1 || nbr > 10000 || !ft_buf_is_number(buf))
 		{
-			ft_error("ERROR\n");
+			ft_error();
 			return (free(buf), false);
 		}
 		(*max)  = (nbr > *max) ? nbr : *max;
 		if (!ft_add_char_vector(&nbr, tab, 1))
 		{
-			ft_error("ERROR\nCould't allocate memory\n");
+			ft_error();
 			return (free(buf), false);
 		}
 		free(buf);
@@ -129,13 +135,13 @@ bool	ft_open(char *file, t_vector *tab, int *max)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_error("ERROR\nCould't open file\n");
+		ft_error();
 		return (false);
 	}
 	test = read(fd, NULL, 0);
 	if (test < 0)
 	{
-		ft_error("ERROR\nCould't read file\n");
+		ft_error();
 		close(fd);
 		return (false);
 	}

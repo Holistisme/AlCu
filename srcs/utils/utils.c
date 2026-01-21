@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:34:13 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 18:49:35 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 05:30:54 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,13 +167,11 @@ void	ft_putnbr(int nbr)
 
 /**
  * @brief	Outputs an error message to standard error.
- * 
- * This function writes the provided error message to the standard error
+ *
+ * This function writes an error message to the standard error
  * output (file descriptor 2).
- * 
- * @param	msg	The error message to be displayed.
  */
-void	ft_error(char *msg)
+void	ft_error(void)
 {
-	write(2, msg, ft_strlen(msg));
+	write(2, "ERROR\n", 6);
 }

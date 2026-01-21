@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 04:01:31 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 04:34:49 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_game {
   // ? Audio */
   Music soundtrack;
   Sound selectSound;
+  Sound levelingSound;
   Sound deselectSound;
   Sound confirmationSound;
   Sound victorySound;
