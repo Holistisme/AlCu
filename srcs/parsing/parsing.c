@@ -6,19 +6,20 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:15:07 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 05:30:13 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 12:48:05 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AiCu.h"
-#include "get_next_line.h"
+
+/* ************************************************************************** */
 
 /**
  * @brief	Checks if the input arguments indicate sparse input.
- * 
+ *
  * This function determines whether the program should read from standard input
  * or from a specified file based on the command-line arguments.
- * 
+ *
  * @param	ac	Argument count from the command line.
  * @param	av	Argument vector from the command line.
  * @param	tab	Pointer to the game board vector.
@@ -45,10 +46,10 @@ bool	this_is_sparsing(int ac, char **av, t_vector *tab, int *max)
 
 /**
  * @brief	Checks if the buffer contains a valid number.
- * 
+ *
  * This function verifies that the provided buffer consists solely of numeric
  * characters, optionally followed by a newline character.
- * 
+ *
  * @param	buf	The input buffer to check.
  * @return	True if the buffer is a valid number, false otherwise.
  */
@@ -70,11 +71,11 @@ bool	ft_buf_is_number(char *buf)
 
 /**
  * @brief	Reads game board configuration from standard input.
- * 
+ *
  * This function reads lines from the specified file descriptor (typically
  * standard input) and populates the game board vector with the number of
  * matches for each line. It also updates the maximum number of matches found.
- * 
+ *
  * @param	tab	Pointer to the game board vector.
  * @param	fd	File descriptor to read from.
  * @param	max	Pointer to the maximum number of matches in any line.
@@ -91,7 +92,7 @@ bool	ft_read_stdin(t_vector *tab, int fd, int *max)
 		{
 			if (!tab->index)
 			{
-				ft_error();
+				ft_error("ERROR\n");
 				return (free(buf), false);
 			};
 
@@ -102,13 +103,13 @@ bool	ft_read_stdin(t_vector *tab, int fd, int *max)
 		nbr = ft_atoi(buf);
 		if (nbr < 1 || nbr > 10000 || !ft_buf_is_number(buf))
 		{
-			ft_error();
+			ft_error("ERROR\n");
 			return (free(buf), false);
 		}
 		(*max)  = (nbr > *max) ? nbr : *max;
 		if (!ft_add_char_vector(&nbr, tab, 1))
 		{
-			ft_error();
+			ft_error("ERROR: Memory allocation failed.\n");
 			return (free(buf), false);
 		}
 		free(buf);
@@ -118,11 +119,11 @@ bool	ft_read_stdin(t_vector *tab, int fd, int *max)
 
 /**
  * @brief	Opens a file and reads the game board configuration.
- * 
+ *
  * This function attempts to open the specified file, checks for read
  * permissions, and then reads the game board configuration using the
  * ft_read_stdin function.
- * 
+ *
  * @param	file	The name of the file to open.
  * @param	tab	Pointer to the game board vector.
  * @param	max	Pointer to the maximum number of matches in any line.
@@ -135,13 +136,13 @@ bool	ft_open(char *file, t_vector *tab, int *max)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_error();
+		ft_error("ERROR: Cannot open file.\n");
 		return (false);
 	}
 	test = read(fd, NULL, 0);
 	if (test < 0)
 	{
-		ft_error();
+		ft_error("ERROR: No read permission for file.\n");
 		close(fd);
 		return (false);
 	}
@@ -153,3 +154,5 @@ bool	ft_open(char *file, t_vector *tab, int *max)
 	close(fd);
 	return (true);
 }
+
+/* ************************************************************************** */

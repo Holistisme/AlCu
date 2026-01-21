@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:32:41 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 17:19:28 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:58:07 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "AiCu.h"
 
 static char		*ft_gnl_read(t_buffer *actual, char **d, ssize_t idx_nl);
 static char		*ft_gnl_dest(char **d, char *buf, ssize_t idx, t_buffer \

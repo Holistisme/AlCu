@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:22:39 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 11:43:53 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:50:53 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AiCu.h"
-#include "get_next_line.h"
 #include "graphics.h"
+
+/* ************************************************************************** */
 
 int	main(int ac, char **av)
 {
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 
 	if (!tab)
 	{
-		ft_error();
+		ft_error("ERROR: Memory allocation failed.\n");
 		return (1);
 	}
 	if (ac <= 2)
@@ -30,9 +30,12 @@ int	main(int ac, char **av)
 			return (ft_free_vector(&tab), 1);
 	}
 	else
-		return (ft_error(), 1);
+		return (ft_error("ERROR: Usage './alum1_bonus' or './alum1_bonus [file]'\n"), 1);
 	const int status = renderGraphics(tab);
+	if (status == EXIT_FAILURE)
+		ft_error("ERROR: Graphics initialization failed.\n");
 	ft_free_vector(&tab);
 	return (status);
 }
 
+/* ************************************************************************** */

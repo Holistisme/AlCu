@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:27:19 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 11:43:47 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:47:07 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AiCu.h"
-#include "graphics.h"
-#include "get_next_line.h"
+#include <stdlib.h>
+
+/* ************************************************************************** */
 
 int	main(int ac, char **av)
 {
@@ -21,8 +22,8 @@ int	main(int ac, char **av)
 
 	if (!tab)
 	{
-		ft_error();
-		return (1);
+		ft_error("ERROR: Memory allocation failed.\n");
+		return (EXIT_FAILURE);
 	}
 	if (ac <= 2)
 	{
@@ -30,8 +31,10 @@ int	main(int ac, char **av)
 			return (ft_free_vector(&tab), 1);
 	}
 	else
-		return (ft_error(), 1);
+		return (ft_error("ERROR: Usage './alum1' or './alum1 [file]'\n"), EXIT_FAILURE);
 	ft_run(tab, max);
 	ft_free_vector(&tab);
-	return (0);
+	return (EXIT_SUCCESS);
 }
+
+/* ************************************************************************** */

@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:26:47 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 05:29:35 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 12:41:49 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	this_is_sparsing(int ac, char **av, t_vector *tab, int *max);
 
 /** Ai.c */
 
-void	ft_run(t_vector *tab, int max);
+void	ft_run(t_vector *tab, const int max);
 void	ft_player_move(t_vector *tab);
 int		ft_ai_move(t_vector *tab);
 
@@ -41,7 +41,7 @@ void	ft_print_board(t_vector *tab, int max);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
-void	ft_error(void);
+void	ft_error(const char *message);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(char *nbr);
 void	ft_putnbr(int nbr);

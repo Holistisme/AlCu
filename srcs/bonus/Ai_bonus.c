@@ -6,14 +6,13 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:27:08 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 12:01:49 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 12:53:16 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AiCu.h"
-#include "get_next_line.h"
 #include "graphics.h"
-#include "raylib.h"
+
+/* ************************************************************************** */
 
 static inline	void	validateSelection(t_game *game);
 
@@ -22,7 +21,6 @@ inline	void	ft_move_bonus(t_game *game)
 	int		ai_matches = 0;
 	double	elapsedTime = GetTime() - game->startTime;
 
-	// Bloquer les interactions pendant la pause initiale
 	if (elapsedTime < 5.0)
 		return;
 
@@ -36,7 +34,7 @@ inline	void	ft_move_bonus(t_game *game)
 
 		snprintf(game->aiMessage, sizeof(game->aiMessage), "AI took %d stick%s", ai_matches, (ai_matches > 1) ? "s" : "");
 		game->humanTurn = true;
-		
+
 		game->clickedSticks[0] = NONE_SELECTED;
 		game->clickedSticks[1] = NONE_SELECTED;
 		game->clickedSticks[2] = NONE_SELECTED;
@@ -44,19 +42,19 @@ inline	void	ft_move_bonus(t_game *game)
 
 	if (game->humanTurn && IsKeyPressed(KEY_ENTER))
 		validateSelection(game);
-	
+
 	if (game->sticks->index == 0) {
 		if (game->humanTurn) {
-          if (!IsSoundPlaying(game->victorySound) && !game->ended) {
-            game->ended = true;
-            playAudio(game, game->victorySound);
-          };
-      } else {
-          if (!IsSoundPlaying(game->defeatSound) && !game->ended) {
-            game->ended = true;
-              playAudio(game, game->defeatSound);
-          };
-      };
+			if (!IsSoundPlaying(game->victorySound) && !game->ended) {
+				game->ended = true;
+				playAudio(game, game->victorySound);
+			};
+		} else {
+			if (!IsSoundPlaying(game->defeatSound) && !game->ended) {
+				game->ended = true;
+				playAudio(game, game->defeatSound);
+			};
+		};
 		game->ended = true;
 	}
 }
@@ -64,16 +62,16 @@ inline	void	ft_move_bonus(t_game *game)
 static inline void	validateSelection(t_game *game)
 {
 	int		count = 0, line, current_value;
-	
+
 	for (int i = 0; i < 3; i++)
 		if (game->clickedSticks[i] != NONE_SELECTED)
 			count++;
-	
+
 	if (count > 0 && count <= 3)
 	{
 		line = game->sticks->index - 1;
 		current_value = ((int *)game->sticks->buf)[line];
-		
+
 		if (count <= current_value)
 		{
 			((int *)game->sticks->buf)[line] -= count;
@@ -85,9 +83,8 @@ static inline void	validateSelection(t_game *game)
 
 			playAudio(game, game->confirmationSound);
 			game->humanTurn = false;
-			// Effacer le message de l'IA
-			game->aiMessage[0] = '\0';
-			
+			game->aiMessage[0] = 0;
+
 			game->clickedSticks[0] = NONE_SELECTED;
 			game->clickedSticks[1] = NONE_SELECTED;
 			game->clickedSticks[2] = NONE_SELECTED;
@@ -95,4 +92,4 @@ static inline void	validateSelection(t_game *game)
 	}
 }
 
-
+/* ************************************************************************** */

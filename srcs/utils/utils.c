@@ -6,19 +6,21 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:34:13 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 05:30:54 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 12:49:47 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AiCu.h"
 
+/* ************************************************************************** */
+
 /**
  * @brief	Converts a string to an integer.
- * 
+ *
  * This function parses the string 'nbr' and converts it to an integer value.
  * It handles optional leading whitespace, an optional sign, and numeric
  * characters.
- * 
+ *
  * @param	nbr	The input string representing a number.
  * @return	The integer value represented by the string.
  */
@@ -49,10 +51,10 @@ int	ft_atoi(char *nbr)
 
 /**
  * @brief	Calculates the length of a string.
- * 
+ *
  * This function computes the length of the string 's' by counting the number
  * of characters until the null terminator is encountered.
- * 
+ *
  * @param	s The input string.
  * @return	Length of the string.
  */
@@ -70,10 +72,10 @@ size_t	ft_strlen(const char *s)
 
 /**
  * @brief	Allocates memory for an array and initializes it to zero.
- * 
+ *
  * This function allocates memory for an array of 'nmemb' elements, each of
  * size 'size', and initializes all bytes in the allocated memory to zero.
- * 
+ *
  * @param	nmemb	Number of elements to allocate.
  * @param	size	Size of each element.
  * @return	Pointer to the allocated memory, or NULL if allocation fails.
@@ -100,10 +102,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 /**
  * @brief	Fills a block of memory with a specified byte value.
- * 
+ *
  * This function sets the first 'n' bytes of the memory area pointed to by 's'
  * to the specified byte value 'c'.
- * 
+ *
  * @param	s	Pointer to the memory area to be filled.
  * @param	c	Byte value to set (converted to unsigned char).
  * @param	n	Number of bytes to be set to the value.
@@ -137,10 +139,10 @@ void	*ft_memset(void *s, int c, size_t n)
 
 /**
  * @brief	Outputs an integer to standard output.
- * 
+ *
  * This function converts the given integer to its string representation
  * and writes it to the standard output (file descriptor 1).
- * 
+ *
  * @param	nbr	The integer to be printed.
  */
 void	ft_putnbr(int nbr)
@@ -171,7 +173,9 @@ void	ft_putnbr(int nbr)
  * This function writes an error message to the standard error
  * output (file descriptor 2).
  */
-void	ft_error(void)
+void	ft_error(const char *message)
 {
-	write(2, "ERROR\n", 6);
+	write(2, message, ft_strlen(message));
 }
+
+/* ************************************************************************** */

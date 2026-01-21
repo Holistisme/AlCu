@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:44:12 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 11:31:44 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:58:59 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_vector	*ft_new_vector(size_t nb_octect)
  * @param	s The data to add
  * @param	vector The vector to add the data to
  * @param	len The number of elements to add
- * @return	t_vector* The vector with the new data, or NULL if an error occured
+ * @return	t_vector* The vector with the new data, or NULL if an error occurred
  */
 t_vector	*ft_add_char_vector(void *s, t_vector *vector, size_t len)
 {
