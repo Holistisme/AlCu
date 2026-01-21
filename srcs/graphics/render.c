@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 23:49:24 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 11:42:58 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:11:48 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ static void inline updateWindow(t_game *game) {
   if (game->ended) {
     char buffer[256];
 
-    snprintf(buffer, sizeof(buffer), "Press R to Restart (same board)\nPress Q or ESC to quit.");
+    snprintf(buffer, sizeof(buffer), "Press R to Restart (same board)\n      Press Q or ESC to quit");
     drawBackground(game->humanTurn ? game->victoryBackground : game->defeatBackground);
-    DrawText(buffer, GetScreenWidth() * 0.33,
-      GetScreenHeight() * (game->humanTurn ? 0.575 : 0.525), 90, YELLOW);
+    DrawText(buffer, GetScreenWidth() * (game->humanTurn ? 0.28 : 0.30),
+      GetScreenHeight() * (game->humanTurn ? 0.575 : 0.48), 90, YELLOW);
   } else {
     drawBackground(game->backgroundTexture);
 
@@ -82,19 +82,18 @@ static void inline updateWindow(t_game *game) {
   };
 
   if (IsKeyPressed(KEY_R) && game->ended) {
-	ft_free_vector(&game->sticks);
-	game->sticks = ft_copy_vector(game->save);
-	if (!game->sticks) {
-	  game->gameOn = false;
-	  return;
-	};
-	game->ended = false;
-	game->humanTurn = false;
-	// game->winner = false;
-	game->started = false;
-	game->startTime = GetTime();
-	for (size_t i = 0; i < 3; i++)
-	  game->clickedSticks[i] = NONE_SELECTED;
+    ft_free_vector(&game->sticks);
+    game->sticks = ft_copy_vector(game->save);
+    if (!game->sticks) {
+      game->gameOn = false;
+      return;
+    };
+    game->ended = false;
+    game->humanTurn = false;
+    game->started = false;
+    game->startTime = GetTime();
+    for (size_t i = 0; i < 3; i++)
+      game->clickedSticks[i] = NONE_SELECTED;
   };
   EndDrawing();
   ft_move_bonus(game);
@@ -104,47 +103,34 @@ static void inline updateWindow(t_game *game) {
 
 static inline void	displayMessage(t_game *game)
 {
-	char	buffer[256];
-	int		count = 0;
-	double	elapsedTime = GetTime() - game->startTime;
+  char	buffer[256];
+  int		count = 0;
+  double	elapsedTime = GetTime() - game->startTime;
 
-	for (int i = 0; i < 3; i++)
-		if (game->clickedSticks[i] != NONE_SELECTED)
-			count++;
+  for (int i = 0; i < 3; i++)
+    if (game->clickedSticks[i] != NONE_SELECTED)
+      count++;
 
-	if (!game->ended)
-	{
-		drawHiddenHeaps(game);
-		drawHiddenSticks(game);
-	};
+  if (!game->ended)
+  {
+    drawHiddenHeaps(game);
+    drawHiddenSticks(game);
+  };
 
-	if (elapsedTime < 5.0)
-    	drawCountdownMessage(elapsedTime);
-	else game->started = true;
+  if (elapsedTime < 5.0)
+    drawCountdownMessage(elapsedTime);
+  else game->started = true;
 
-	if (game->ended) {
-		if (game->humanTurn) {
-     	 	if (!IsSoundPlaying(game->victorySound) /*&& !game->ended*/) {
-       			game->ended  = true;
-        		// game->winner = true;
-        		playAudio(game, game->victorySound);
-      		};
-    	} else {
-      		if (!IsSoundPlaying(game->defeatSound) /*&& !game->ended*/) {
-        		game->ended = true;
-       		 	playAudio(game, game->defeatSound);
-      		};
-    	};
-	} else if (game->humanTurn) {
-		snprintf(buffer, sizeof(buffer),
+  if (game->humanTurn) {
+    snprintf(buffer, sizeof(buffer),
       "Your turn - Select 1-3 sticks and press ENTER to confirm.\nSelected: %d",
       count);
-		DrawText(buffer, GetScreenWidth() * 0.05,
+    DrawText(buffer, GetScreenWidth() * 0.05,
       GetScreenHeight() * 0.9, 50, WHITE);
-		if (game->aiMessage[0])
-			DrawText(game->aiMessage, GetScreenWidth() * 0.05,
-        	GetScreenHeight() * 0.85, 50, ORANGE);
-	}
+    if (game->aiMessage[0])
+      DrawText(game->aiMessage, GetScreenWidth() * 0.05,
+          GetScreenHeight() * 0.85, 50, ORANGE);
+  }
 }
 
 static inline void drawCountdownMessage(double elapsedTime) {

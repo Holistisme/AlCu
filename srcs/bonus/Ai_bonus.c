@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ai_bonus.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:27:08 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 11:14:38 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:01:49 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,20 @@ inline	void	ft_move_bonus(t_game *game)
 	if (game->humanTurn && IsKeyPressed(KEY_ENTER))
 		validateSelection(game);
 	
-	if (game->sticks->index == 0)
+	if (game->sticks->index == 0) {
+		if (game->humanTurn) {
+          if (!IsSoundPlaying(game->victorySound) && !game->ended) {
+            game->ended = true;
+            playAudio(game, game->victorySound);
+          };
+      } else {
+          if (!IsSoundPlaying(game->defeatSound) && !game->ended) {
+            game->ended = true;
+              playAudio(game, game->defeatSound);
+          };
+      };
 		game->ended = true;
+	}
 }
 
 static inline void	validateSelection(t_game *game)
