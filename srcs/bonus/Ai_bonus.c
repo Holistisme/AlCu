@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:27:08 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 05:19:09 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 09:21:47 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static inline	void	validateSelection(t_game *game, bool *player_turn);
 
 inline	void	ft_move_bonus(t_game *game, bool *player_turn, bool *game_over)
 {
-	char	buffer[128];
 	int		ai_matches = 0;
 	double	elapsedTime = GetTime() - game->startTime;
 
@@ -35,9 +34,7 @@ inline	void	ft_move_bonus(t_game *game, bool *player_turn, bool *game_over)
 		if (index > 1 && index != game->sticks->index)
 			playAudio(game, game->levelingSound);
 
-		snprintf(buffer, sizeof(buffer), "AI took %d stick(s)", ai_matches);
-		// Stocker le message pour l'affichage
-		snprintf(game->aiMessage, sizeof(game->aiMessage), "AI took %d stick(s)", ai_matches);
+		snprintf(game->aiMessage, sizeof(game->aiMessage), "AI took %d stick%s", ai_matches, (ai_matches > 1) ? "s" : "");
 		*player_turn = true;
 		
 		game->clickedSticks[0] = NONE_SELECTED;

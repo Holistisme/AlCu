@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 03:52:33 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 13:22:47 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 09:21:27 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void inline drawBackground(const Texture2D texture) {
 /* ************************************************************************** */
 
 void drawSticksHeap(t_game *game, int y) {
-  const int size = ((int *)game->sticks->buf)[game->sticks->index - 1 - y];
+  int size = ((int *)game->sticks->buf)[game->sticks->index - 1 - y];
+  if (size > 9)
+    size = 9;
 
   if (size % 2 == 0) {
     int j = 0;
@@ -70,21 +72,25 @@ static void drawStick(t_game *game, Vector3 position, int index) {
       if (game->clickedSticks[i] == index)
         is_clicked = true;
 
-  if (game->stickSelected == NONE_SELECTED &&
+  if (game->started && is_clicked) {
+    DrawModel(game->selectedStickModel, position, STICK_SCALE, BLACK);
+    DrawModelWires(game->stickModel, position, STICK_SCALE, RED);
+  };
+
+  if (game->started &&
     GetRayCollisionBox(
       GetMouseRay(GetMousePosition(), game->camera), box).hit)
   {
     DrawModel(game->selectedStickModel, position, STICK_SCALE, BLACK);
-    DrawModelWires(game->stickModel, position, STICK_SCALE, RED);
-    game->stickSelected = UNREACHABLE_STICK;
 
-    if ((int)position.y == 0)
-      game->stickSelected = index;
-  } else if (is_clicked) {
-    DrawModel(game->selectedStickModel, position, STICK_SCALE, GREEN);
-  } else {
+    Color wireColor = is_clicked ? GREEN : RED;
+    if ((int)position.y)
+      wireColor = WHITE;
+    DrawModelWires(game->stickModel, position, STICK_SCALE, wireColor);
+
+    game->stickSelected = (int)position.y == 0 ? index : UNREACHABLE_STICK;
+  } else if (!is_clicked)
     DrawModel(game->stickModel, position, STICK_SCALE, WHITE);
-  }
 };
 
 /* ************************************************************************** */

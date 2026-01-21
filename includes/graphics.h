@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 04:34:49 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 09:14:39 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ typedef struct s_game {
   double      startTime;
   char        aiMessage[256];
 
+  Texture2D   heapTexture;
+  Texture2D   branchTexture;
+
   // ? Audio */
   Music soundtrack;
   Sound selectSound;
@@ -45,6 +48,7 @@ typedef struct s_game {
   bool  audioEnabled;
 
   // ? Game state */
+  bool started;
   bool ended;
 } t_game;
 
@@ -59,6 +63,9 @@ void playAudio(t_game *game, Sound sound);
 
 void drawBackground(const Texture2D texture);
 void drawSticksHeap(t_game *game, int y);
+
+void drawHiddenHeaps(t_game *game);
+void drawHiddenSticks(t_game *game);
 
 void stopRender(t_game *game);
 void deleteAudio(t_game *game);

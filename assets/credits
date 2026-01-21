@@ -6,7 +6,7 @@
 #    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 00:46:13 by aheitz            #+#    #+#              #
-#    Updated: 2026/01/21 04:10:36 by aheitz           ###   ########.fr        #
+#    Updated: 2026/01/21 09:24:02 by aheitz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ victory.wav:    'mixkit.co'
 ./textures/:
 background.jpg: 'Paysage forestier design plat dessiné à la main' - 'Freepik'
 stick.jpg:      '0melapics' on "Freepik"
+branch.png:     'Single stick and bunch of sticks' by 'brgfx' on "Freepik"
+heap.png:       'A sticker template with a tree [...]' by 'brgfx' on "Freepik"
 
 
 

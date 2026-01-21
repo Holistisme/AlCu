@@ -6,7 +6,7 @@
 #    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 00:04:27 by aheitz            #+#    #+#              #
-#    Updated: 2026/01/21 01:02:31 by aheitz           ###   ########.fr        #
+#    Updated: 2026/01/21 09:05:35 by aheitz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC_GRAPH_DIR	= graphics/
 SRC_GRAPH		= click.c \
 				close.c   \
 				draw.c    \
+				hud.c     \
 				render.c  \
 				setup.c   \
 				audio.c   \
