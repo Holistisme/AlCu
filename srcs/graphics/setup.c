@@ -6,12 +6,11 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:02 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 08:49:04 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:24:13 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
-#include "raylib.h"
 
 /* ************************************************************************** */
 
@@ -36,6 +35,8 @@ int setupWindow(t_game *game, t_vector *sticks) {
     || setTexture(&game->stickTexture, "assets/textures/stick.jpg") == EXIT_FAILURE
     || setTexture(&game->heapTexture, "assets/textures/heap.png") == EXIT_FAILURE
     || setTexture(&game->branchTexture, "assets/textures/branch.png") == EXIT_FAILURE
+    || setTexture(&game->victoryBackground, "assets/textures/victory.png") == EXIT_FAILURE
+    || setTexture(&game->defeatBackground, "assets/textures/defeat.png") == EXIT_FAILURE
     || setTexture(&game->backgroundTexture, "assets/textures/background.jpg") == EXIT_FAILURE)
   {
     stopRender(game);

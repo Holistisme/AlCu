@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 08:56:44 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 09:26:06 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 09:59:47 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void drawHiddenSticks(t_game *game)
 {
   const double yPositions[3]  = {0.225, 0.45, 0.70};
   const int    stickCounts[3] = {
-    ((int *)game->sticks->buf)[game->sticks->index - 3],
-    ((int *)game->sticks->buf)[game->sticks->index - 2],
-    ((int *)game->sticks->buf)[game->sticks->index - 1],
+    game->sticks->index >= 3 ? ((int *)game->sticks->buf)[game->sticks->index - 3] : 0,
+    game->sticks->index >= 2 ? ((int *)game->sticks->buf)[game->sticks->index - 2] : 0,
+    game->sticks->index >= 1 ? ((int *)game->sticks->buf)[game->sticks->index - 1] : 0,
   };
 
   for (int i = 0; i < 3; i++) {

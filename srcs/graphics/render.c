@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 23:49:24 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 09:16:34 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:30:50 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,33 @@ static void inline updateWindow(t_game *game, bool *player_turn, bool *game_over
 
   BeginDrawing();
   ClearBackground(RAYWHITE);
-  drawBackground(game->backgroundTexture);
-  BeginMode3D(game->camera);
 
-  for (size_t i = 0; i < 3 && i < game->sticks->index; i++)
-    drawSticksHeap(game, i);
+  if (game->ended) {
+    char buffer[256];
 
-  if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-    selectStick(game);
+    snprintf(buffer, sizeof(buffer), "Press Q or ESC to quit.");
+    drawBackground(game->winner ? game->victoryBackground : game->defeatBackground);
+    DrawText(buffer, GetScreenWidth() * 0.33,
+      GetScreenHeight() * (game->winner ? 0.575 : 0.525), 90, YELLOW);
+  } else {
+    drawBackground(game->backgroundTexture);
 
-  if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_Q))
-  {
+    BeginMode3D(game->camera);
+    for (size_t i = 0; i < 3 && i < game->sticks->index; i++)
+      drawSticksHeap(game, i);
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+      selectStick(game);
+
+    EndMode3D();
+    displayMessage(game, *player_turn, *game_over);
+  };
+
+  if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_Q)) {
     *game_on = false;
     return;
   };
 
-  EndMode3D();
-  displayMessage(game, *player_turn, *game_over);
   EndDrawing();
   ft_move_bonus(game, player_turn, game_over);
 };
@@ -111,7 +121,8 @@ static inline void	displayMessage(t_game *game, bool player_turn, bool game_over
 	{
 		if (player_turn) {
       if (!IsSoundPlaying(game->victorySound) && !game->ended) {
-        game->ended = true;
+        game->ended  = true;
+        game->winner = true;
         playAudio(game, game->victorySound);
       };
 			snprintf(buffer, sizeof(buffer), "Player wins !\nPress ESC or Q to quit.");

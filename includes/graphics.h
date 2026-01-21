@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 09:14:39 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:11:20 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ typedef struct s_game {
   Texture2D   heapTexture;
   Texture2D   branchTexture;
 
+  Texture2D   victoryBackground;
+  Texture2D   defeatBackground;
+
   // ? Audio */
   Music soundtrack;
   Sound selectSound;
@@ -50,6 +53,7 @@ typedef struct s_game {
   // ? Game state */
   bool started;
   bool ended;
+  bool winner;
 } t_game;
 
 /* ************************************************************************** */
