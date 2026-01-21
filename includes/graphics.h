@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 10:11:20 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:50:51 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_game {
   bool started;
   bool ended;
   bool winner;
+  bool humanTurn;
+  bool gameOn;
 } t_game;
 
 /* ************************************************************************** */
@@ -76,6 +78,6 @@ void deleteAudio(t_game *game);
 
 void selectStick(t_game *game);
 
-void ft_move_bonus(t_game *game, bool *player_turn, bool *game_over);
+void ft_move_bonus(t_game *game);
 
 /* ************************************************************************** */

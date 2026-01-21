@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 23:49:24 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 10:30:50 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:58:45 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 
 /* ************************************************************************** */
 
-static void inline updateWindow(t_game *game, bool *player_turn, bool *game_over, bool *game_on);
-static inline void	displayMessage(t_game *game, bool player_turn, bool game_over);
+static inline void updateWindow(t_game *game);
+static inline void displayMessage(t_game *game);
+static inline void drawCountdownMessage(double elapsedTime);
 
 /* ************************************************************************** */
 
 int renderGraphics(t_vector *sticks) {
   t_game game = {0};
-  bool   player_turn = false, game_over = false, game_on = true;
+  game.gameOn = true;
 
   if (setupWindow(&game, sticks) == EXIT_FAILURE)
     return EXIT_FAILURE;
 
-  game.clickedSticks[0] = NONE_SELECTED;
-  game.clickedSticks[1] = NONE_SELECTED; // ? Reset after confirmation
-  game.clickedSticks[2] = NONE_SELECTED;
   game.startTime = GetTime();
-  game.aiMessage[0] = '\0';
+  for (size_t i = 0; i < 3; i++)
+    game.clickedSticks[i] = NONE_SELECTED;
 
-  printf("Lines remaining: %d\n", game.sticks->buf[game.sticks->index - 1]);
-  while (!WindowShouldClose() && game_on)
-    updateWindow(&game, &player_turn, &game_over, &game_on);
+  while (!WindowShouldClose() && game.gameOn)
+    updateWindow(&game);
 
   stopRender(&game);
   return EXIT_SUCCESS;
@@ -42,7 +40,7 @@ int renderGraphics(t_vector *sticks) {
 
 /* ************************************************************************** */
 
-static void inline updateWindow(t_game *game, bool *player_turn, bool *game_over, bool *game_on) {
+static void inline updateWindow(t_game *game) {
   game->stickSelected = -1;
 
   if (game->audioEnabled) {
@@ -74,21 +72,21 @@ static void inline updateWindow(t_game *game, bool *player_turn, bool *game_over
       selectStick(game);
 
     EndMode3D();
-    displayMessage(game, *player_turn, *game_over);
+    displayMessage(game);
   };
 
   if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_Q)) {
-    *game_on = false;
+    game->gameOn = false;
     return;
   };
 
   EndDrawing();
-  ft_move_bonus(game, player_turn, game_over);
+  ft_move_bonus(game);
 };
 
 /* ************************************************************************** */
 
-static inline void	displayMessage(t_game *game, bool player_turn, bool game_over)
+static inline void	displayMessage(t_game *game)
 {
 	char	buffer[256];
 	int		count = 0;
@@ -98,51 +96,50 @@ static inline void	displayMessage(t_game *game, bool player_turn, bool game_over
 		if (game->clickedSticks[i] != NONE_SELECTED)
 			count++;
 
-	if (!game_over)
+	if (!game->ended)
 	{
     drawHiddenHeaps(game);
     drawHiddenSticks(game);
 	};
 
-	// Pause initiale de 5 secondes
 	if (elapsedTime < 5.0)
-	{
-    const int countdown = 5 - (int)elapsedTime;
+    drawCountdownMessage(elapsedTime);
+	else game->started = true;
 
-		snprintf(buffer, sizeof(buffer),
-      "Game starting in %d second%s...",
-      countdown, (countdown > 1) ? "s" : "");
-		DrawText(buffer, GetScreenWidth() * 0.315,
-      GetScreenHeight() * 0.60, 100, YELLOW);
-		return;
-	} else game->started = true;
-
-	if (game_over)
-	{
-		if (player_turn) {
+	if (game->ended) {
+		if (game->humanTurn) {
       if (!IsSoundPlaying(game->victorySound) && !game->ended) {
         game->ended  = true;
         game->winner = true;
         playAudio(game, game->victorySound);
       };
-			snprintf(buffer, sizeof(buffer), "Player wins !\nPress ESC or Q to quit.");
     } else {
       if (!IsSoundPlaying(game->defeatSound) && !game->ended) {
         game->ended = true;
         playAudio(game, game->defeatSound);
       };
-			snprintf(buffer, sizeof(buffer), "AI wins !\nPress ESC or Q to quit.");
     };
-		DrawText(buffer, GetScreenWidth() * 0.35, GetScreenHeight() * 0.5, 80, RED);
-	}
-	else if (player_turn)
-	{
-		snprintf(buffer, sizeof(buffer), "Your turn - Select 1-3 sticks and press ENTER to confirm.\nSelected: %d", count);
-		DrawText(buffer, GetScreenWidth() * 0.05, GetScreenHeight() * 0.9, 50, WHITE);
-		// Afficher le message de l'IA si disponible
-		if (game->aiMessage[0] != '\0')
-			DrawText(game->aiMessage, GetScreenWidth() * 0.05, GetScreenHeight() * 0.85, 50, ORANGE);
+	} else if (game->humanTurn) {
+		snprintf(buffer, sizeof(buffer),
+      "Your turn - Select 1-3 sticks and press ENTER to confirm.\nSelected: %d",
+      count);
+		DrawText(buffer, GetScreenWidth() * 0.05,
+      GetScreenHeight() * 0.9, 50, WHITE);
+		if (game->aiMessage[0])
+			DrawText(game->aiMessage, GetScreenWidth() * 0.05,
+        GetScreenHeight() * 0.85, 50, ORANGE);
 	}
 }
+
+static inline void drawCountdownMessage(double elapsedTime) {
+  char buffer[256];
+  const int countdown = 5 - (int)elapsedTime;
+
+  snprintf(buffer, sizeof(buffer),
+    "Game starting in %d second%s...",
+    countdown, (countdown > 1) ? "s" : "");
+  DrawText(buffer, GetScreenWidth() * 0.315,
+    GetScreenHeight() * 0.60, 100, YELLOW);
+};
 
 /* ************************************************************************** */

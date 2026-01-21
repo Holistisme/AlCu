@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:27:08 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 09:21:47 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:51:58 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "graphics.h"
 #include "raylib.h"
 
-static inline	void	validateSelection(t_game *game, bool *player_turn);
+static inline	void	validateSelection(t_game *game);
 
-inline	void	ft_move_bonus(t_game *game, bool *player_turn, bool *game_over)
+inline	void	ft_move_bonus(t_game *game)
 {
 	int		ai_matches = 0;
 	double	elapsedTime = GetTime() - game->startTime;
@@ -26,7 +26,7 @@ inline	void	ft_move_bonus(t_game *game, bool *player_turn, bool *game_over)
 	if (elapsedTime < 5.0)
 		return;
 
-	if (!*player_turn && game->sticks->index > 0 && !*game_over)
+	if (!game->humanTurn && game->sticks->index > 0 && !game->ended)
 	{
 		const size_t index = game->sticks->index;
 
@@ -35,21 +35,21 @@ inline	void	ft_move_bonus(t_game *game, bool *player_turn, bool *game_over)
 			playAudio(game, game->levelingSound);
 
 		snprintf(game->aiMessage, sizeof(game->aiMessage), "AI took %d stick%s", ai_matches, (ai_matches > 1) ? "s" : "");
-		*player_turn = true;
+		game->humanTurn = true;
 		
 		game->clickedSticks[0] = NONE_SELECTED;
 		game->clickedSticks[1] = NONE_SELECTED;
 		game->clickedSticks[2] = NONE_SELECTED;
 	}
 
-	if (*player_turn && IsKeyPressed(KEY_ENTER))
-		validateSelection(game, player_turn);
+	if (game->humanTurn && IsKeyPressed(KEY_ENTER))
+		validateSelection(game);
 	
 	if (game->sticks->index == 0)
-		*game_over = true;
+		game->ended = true;
 }
 
-static inline void	validateSelection(t_game *game, bool *player_turn)
+static inline void	validateSelection(t_game *game)
 {
 	int		count = 0, line, current_value;
 	
@@ -72,7 +72,7 @@ static inline void	validateSelection(t_game *game, bool *player_turn)
 			};
 
 			playAudio(game, game->confirmationSound);
-			*player_turn = false;
+			game->humanTurn = false;
 			// Effacer le message de l'IA
 			game->aiMessage[0] = '\0';
 			
