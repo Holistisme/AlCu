@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 13:27:28 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 04:01:31 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,34 @@ typedef struct s_game {
   int         stickSelected;
   double      startTime;
   char        aiMessage[256];
+
+  // ? Audio */
+  Music soundtrack;
+  Sound selectSound;
+  Sound deselectSound;
+  Sound confirmationSound;
+  Sound victorySound;
+  Sound defeatSound;
+  bool  audioEnabled;
+
+  // ? Game state */
+  bool ended;
 } t_game;
 
 /* ************************************************************************** */
 
-int  setupWindow(t_game *game, t_vector *sticks);
 int  renderGraphics(t_vector *sticks);
+
+int  setupWindow(t_game *game, t_vector *sticks);
+int  setupAudio(t_game *game);
+
+void playAudio(t_game *game, Sound sound);
 
 void drawBackground(const Texture2D texture);
 void drawSticksHeap(t_game *game, int y);
 
 void stopRender(t_game *game);
+void deleteAudio(t_game *game);
 
 void selectStick(t_game *game);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ai.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 17:22:27 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/20 19:45:55 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 03:41:16 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,12 @@ inline int	ft_ai_move(t_vector *tab)
 				matches = current_value - 1;
 		}
 	}
-	
+
+	if (matches < 1)
+		matches = 1;
+	else if (matches > 3)
+		matches = 3;
+
 	((int *)tab->buf)[line] -= matches;
 	if (((int *)tab->buf)[line] == 0)
 		tab->index--;

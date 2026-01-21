@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+         #
+#    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 00:04:27 by aheitz            #+#    #+#              #
-#    Updated: 2026/01/20 13:18:03 by benpicar         ###   ########.fr        #
+#    Updated: 2026/01/21 01:02:31 by aheitz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC_GRAPH		= click.c \
 				close.c   \
 				draw.c    \
 				render.c  \
-				setup.c
+				setup.c   \
+				audio.c   \
 
 SRC_BON_DIR	= bonus/
 SRC_BONN 	= main_bonus.c \

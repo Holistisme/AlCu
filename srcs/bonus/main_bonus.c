@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:22:39 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/20 15:24:41 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 04:06:12 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int	main(int ac, char **av)
 	else
 		return (ft_error("ERROR\nUsage: './alum1' or './alum1 [file]'\n"), 1);
 	printf("main %d   %d   %d   %d\n", tab->buf[0], tab->buf[1], tab->buf[2], tab->buf[3]);
-	renderGraphics(tab);
+
+	const int status = renderGraphics(tab);
 	ft_free_vector(&tab);
-	return (0);
+	return (status);
 }
 

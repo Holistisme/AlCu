@@ -6,7 +6,7 @@
 /*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:02 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 06:59:48 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 04:04:02 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,78 +15,80 @@
 
 /* ************************************************************************** */
 
-static int  inline setModels   (t_game *game);
-static int  inline setTextures (t_game *game);
-static void inline applyTexture(t_game *game);
-static void inline setCamera   (t_game *game);
+static inline int setModel(Model *model, const char *path);
+static inline int setTexture(Texture2D *texture, const char *path);
+
+static inline void applyTexture(t_game *game);
+static inline void setCamera   (t_game *game);
 
 /* ************************************************************************** */
 
 int setupWindow(t_game *game, t_vector *sticks) {
   InitWindow(GetScreenWidth(), GetScreenHeight(), "AlCu.exe");
+  if (!IsWindowReady())
+    return EXIT_FAILURE;
+
   SetTargetFPS(60);
   game->sticks = sticks;
 
-  if (setModels(game) == EXIT_FAILURE || setTextures(game) == EXIT_FAILURE)
+  if (setModel(&game->stickModel, "assets/Stick.glb") == EXIT_FAILURE
+    || setModel(&game->selectedStickModel, "assets/Stick.glb") == EXIT_FAILURE
+    || setTexture(&game->stickTexture, "assets/textures/stick.jpg") == EXIT_FAILURE
+    || setTexture(&game->backgroundTexture, "assets/textures/background.jpg") == EXIT_FAILURE)
+  {
+    stopRender(game);
     return EXIT_FAILURE;
+  };
 
   game->stickBox = GetModelBoundingBox(game->stickModel);
   applyTexture(game);
   setCamera(game);
 
+  // ! Setup audio can fail without threatening the graphics setup
+  game->audioEnabled = setupAudio(game) == EXIT_SUCCESS;
+
+  // ! Therefore, we do not treat it as a fatal error here
+  // ! But if you want to treat it as such, uncomment the lines below
+  // if (setupAudio(game) == EXIT_FAILURE) {
+    // stopRender(game);
+    // return EXIT_FAILURE;
+  // };
   return EXIT_SUCCESS;
 };
 
 /* ************************************************************************** */
 
-static int inline setModels(t_game *game) {
-  game->stickModel = LoadModel("models/Stick.glb");
-  if (!game->stickModel.meshCount) {
-    CloseWindow();
+static inline int setModel(Model *model, const char *path) {
+  *model = LoadModel(path);
+  if (!IsModelValid(*model)) {
+    *model = (Model){0};
     return EXIT_FAILURE;
   };
-
-  game->selectedStickModel = LoadModel("models/Stick.glb");
-  if (!game->selectedStickModel.meshCount) {
-    UnloadModel(game->stickModel);
-    CloseWindow();
-    return EXIT_FAILURE;
-  };
-
   return EXIT_SUCCESS;
 };
 
-static int inline setTextures(t_game *game) {
-  game->stickTexture = LoadTexture("textures/stick.jpg");
-  if (!game->stickTexture.id) {
-    UnloadModel(game->stickModel);
-    UnloadModel(game->selectedStickModel);
-    CloseWindow();
+static inline int setTexture(Texture2D *texture, const char *path) {
+  *texture = LoadTexture(path);
+  if (!IsTextureValid(*texture)) {
+    *texture = (Texture2D){0};
     return EXIT_FAILURE;
   };
-
-  game->backgroundTexture = LoadTexture("textures/background.jpg");
-  if (!game->backgroundTexture.id) {
-    UnloadModel(game->stickModel);
-    UnloadModel(game->selectedStickModel);
-    UnloadTexture(game->stickTexture);
-    CloseWindow();
-    return EXIT_FAILURE;
-  };
-
   return EXIT_SUCCESS;
 };
 
-static void inline applyTexture(t_game *game) {
+/* ************************************************************************** */
+
+static inline void applyTexture(t_game *game) {
   for (int i = 0; i < game->stickModel.materialCount; i++) {
     game->stickModel.materials[i].maps[MATERIAL_MAP_ALBEDO].texture = game->stickTexture;
     game->stickModel.materials[i].maps[MATERIAL_MAP_ALBEDO].color = WHITE;
   };
+
   for (int i = 0; i < game->selectedStickModel.materialCount; i++)
     game->selectedStickModel.materials[i].maps[MATERIAL_MAP_ALBEDO].color = WHITE;
 };
 
-static void inline setCamera(t_game *game) {
+static inline void setCamera(t_game *game) {
   game->camera.position   = (Vector3){0.0f, 0.0f, 10.0f};
   game->camera.target     = (Vector3){0.0f, 2.0f, 0.0f};
   game->camera.up         = (Vector3){0.0f, 1.0f, 0.0f};

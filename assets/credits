@@ -1,0 +1,31 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    credits                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/01/21 00:46:13 by aheitz            #+#    #+#              #
+#    Updated: 2026/01/21 04:10:36 by aheitz           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+./audio/:
+soundtrack.mp3: 'A Leisurely Cruise - Pushmo World Gamerip Soundtrack'
+
+confirm.wav:    'mixkit.co'
+defeat.wav:     'mixkit.co'
+deselect.wav:   'mixkit.co'
+select.wav:     'mixkit.co'
+victory.wav:    'mixkit.co'
+
+
+
+./textures/:
+background.jpg: 'Paysage forestier design plat dessiné à la main' - 'Freepik'
+stick.jpg:      '0melapics' on "Freepik"
+
+
+
+./:
+Stick.glb:      'Chris Lee' on "Poly.Pizza"

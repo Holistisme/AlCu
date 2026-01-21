@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 23:49:24 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/20 15:36:57 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 04:02:11 by aheitz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline void	displayMessage(t_game *game, bool player_turn, bool game_over
 /* ************************************************************************** */
 
 int renderGraphics(t_vector *sticks) {
-  t_game game;
+  t_game game = {0};
   bool   player_turn = false, game_over = false, game_on = true;
 
   if (setupWindow(&game, sticks) == EXIT_FAILURE)
@@ -44,6 +44,8 @@ int renderGraphics(t_vector *sticks) {
 
 static void inline updateWindow(t_game *game, bool *player_turn, bool *game_over, bool *game_on) {
   game->stickSelected = -1;
+  if (game->audioEnabled)
+    UpdateMusicStream(game->soundtrack);
   BeginDrawing();
   ClearBackground(RAYWHITE);
   drawBackground(game->backgroundTexture);
@@ -102,10 +104,19 @@ static inline void	displayMessage(t_game *game, bool player_turn, bool game_over
 	
 	if (game_over)
 	{
-		if (player_turn)
+		if (player_turn) {
+      if (!IsSoundPlaying(game->victorySound) && !game->ended) {
+        game->ended = true;
+        playAudio(game, game->victorySound);
+      };
 			snprintf(buffer, sizeof(buffer), "Player wins !\nPress ESC or Q to quit.");
-		else
+    } else {
+      if (!IsSoundPlaying(game->defeatSound) && !game->ended) {
+        game->ended = true;
+        playAudio(game, game->defeatSound);
+      };
 			snprintf(buffer, sizeof(buffer), "AI wins !\nPress ESC or Q to quit.");
+    };
 		DrawText(buffer, GetScreenWidth() * 0.35, GetScreenHeight() * 0.5, 80, RED);
 	}
 	else if (player_turn)
