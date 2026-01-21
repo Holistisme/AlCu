@@ -6,7 +6,7 @@
 /*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:44:12 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 17:19:17 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:31:44 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,21 @@ t_vector	*ft_add_char_vector(void *s, t_vector *vector, size_t len)
 		vector->index = vector->index + len;
 	}
 	return (vector);
+}
+
+t_vector	*ft_copy_vector(t_vector *vector)
+{
+	t_vector	*new;
+
+	new = ft_new_vector(vector->nb_octect);
+	if (!new)
+		return ((t_vector *) NULL);
+	if (!ft_add_char_vector(vector->buf, new, vector->index))
+	{
+		ft_free_vector(&new);
+		return ((t_vector *) NULL);
+	}
+	return (new);
 }
 
 /**

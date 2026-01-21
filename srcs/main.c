@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:27:19 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 05:29:43 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:43:47 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int ac, char **av)
 	}
 	else
 		return (ft_error(), 1);
-	// renderGraphics(tab);
 	ft_run(tab, max);
 	ft_free_vector(&tab);
 	return (0);

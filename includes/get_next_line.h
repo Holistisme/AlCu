@@ -6,7 +6,7 @@
 /*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:33:32 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/19 16:48:23 by benpicar         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:24:49 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char		*get_next_line(int fd, int end);
 
 t_vector	*ft_new_vector(size_t nb_octect);
 t_vector	*ft_add_char_vector(void *s, t_vector *vector, size_t len);
+t_vector	*ft_copy_vector(t_vector *vector);
 void		ft_free_vector(t_vector **vector);
 void		ft_free_all(t_buffer **start, t_buffer *tmp, t_buffer *tmp2, \
 t_buffer *tmp3);

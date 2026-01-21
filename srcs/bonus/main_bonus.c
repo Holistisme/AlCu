@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:22:39 by benpicar          #+#    #+#             */
-/*   Updated: 2026/01/21 05:29:52 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:43:53 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	main(int ac, char **av)
 	}
 	else
 		return (ft_error(), 1);
-	printf("main %d   %d   %d   %d\n", tab->buf[0], tab->buf[1], tab->buf[2], tab->buf[3]);
-
 	const int status = renderGraphics(tab);
 	ft_free_vector(&tab);
 	return (status);

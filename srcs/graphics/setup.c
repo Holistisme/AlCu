@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:02 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 10:24:13 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:26:09 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int setupWindow(t_game *game, t_vector *sticks) {
     return EXIT_FAILURE;
 
   SetTargetFPS(60);
-  game->sticks = sticks;
+  game->save = sticks;
 
   if (setModel(&game->stickModel, "assets/Stick.glb") == EXIT_FAILURE
     || setModel(&game->selectedStickModel, "assets/Stick.glb") == EXIT_FAILURE
@@ -56,6 +56,12 @@ int setupWindow(t_game *game, t_vector *sticks) {
     // stopRender(game);
     // return EXIT_FAILURE;
   // };
+  game->sticks = ft_copy_vector(sticks);
+  if (!game->sticks)
+  {
+	stopRender(game);
+	return EXIT_FAILURE;
+  }
   return EXIT_SUCCESS;
 };
 

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 06:13:43 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 10:50:51 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:30:18 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
 #include "AiCu.h"
 #include "raylib.h"
 
@@ -23,6 +24,7 @@
 
 typedef struct s_game {
   t_vector   *sticks;
+  t_vector   *save;
   Model       stickModel;
   Model       selectedStickModel;
   BoundingBox stickBox;

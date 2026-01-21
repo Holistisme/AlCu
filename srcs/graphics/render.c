@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aheitz <aheitz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benpicar <benpicar@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 23:49:24 by aheitz            #+#    #+#             */
-/*   Updated: 2026/01/21 10:58:45 by aheitz           ###   ########.fr       */
+/*   Updated: 2026/01/21 11:42:58 by benpicar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int renderGraphics(t_vector *sticks) {
     updateWindow(&game);
 
   stopRender(&game);
+  ft_free_vector(&game.sticks);
   return EXIT_SUCCESS;
 };
 
@@ -57,10 +58,10 @@ static void inline updateWindow(t_game *game) {
   if (game->ended) {
     char buffer[256];
 
-    snprintf(buffer, sizeof(buffer), "Press Q or ESC to quit.");
-    drawBackground(game->winner ? game->victoryBackground : game->defeatBackground);
+    snprintf(buffer, sizeof(buffer), "Press R to Restart (same board)\nPress Q or ESC to quit.");
+    drawBackground(game->humanTurn ? game->victoryBackground : game->defeatBackground);
     DrawText(buffer, GetScreenWidth() * 0.33,
-      GetScreenHeight() * (game->winner ? 0.575 : 0.525), 90, YELLOW);
+      GetScreenHeight() * (game->humanTurn ? 0.575 : 0.525), 90, YELLOW);
   } else {
     drawBackground(game->backgroundTexture);
 
@@ -80,6 +81,21 @@ static void inline updateWindow(t_game *game) {
     return;
   };
 
+  if (IsKeyPressed(KEY_R) && game->ended) {
+	ft_free_vector(&game->sticks);
+	game->sticks = ft_copy_vector(game->save);
+	if (!game->sticks) {
+	  game->gameOn = false;
+	  return;
+	};
+	game->ended = false;
+	game->humanTurn = false;
+	// game->winner = false;
+	game->started = false;
+	game->startTime = GetTime();
+	for (size_t i = 0; i < 3; i++)
+	  game->clickedSticks[i] = NONE_SELECTED;
+  };
   EndDrawing();
   ft_move_bonus(game);
 };
@@ -98,27 +114,27 @@ static inline void	displayMessage(t_game *game)
 
 	if (!game->ended)
 	{
-    drawHiddenHeaps(game);
-    drawHiddenSticks(game);
+		drawHiddenHeaps(game);
+		drawHiddenSticks(game);
 	};
 
 	if (elapsedTime < 5.0)
-    drawCountdownMessage(elapsedTime);
+    	drawCountdownMessage(elapsedTime);
 	else game->started = true;
 
 	if (game->ended) {
 		if (game->humanTurn) {
-      if (!IsSoundPlaying(game->victorySound) && !game->ended) {
-        game->ended  = true;
-        game->winner = true;
-        playAudio(game, game->victorySound);
-      };
-    } else {
-      if (!IsSoundPlaying(game->defeatSound) && !game->ended) {
-        game->ended = true;
-        playAudio(game, game->defeatSound);
-      };
-    };
+     	 	if (!IsSoundPlaying(game->victorySound) /*&& !game->ended*/) {
+       			game->ended  = true;
+        		// game->winner = true;
+        		playAudio(game, game->victorySound);
+      		};
+    	} else {
+      		if (!IsSoundPlaying(game->defeatSound) /*&& !game->ended*/) {
+        		game->ended = true;
+       		 	playAudio(game, game->defeatSound);
+      		};
+    	};
 	} else if (game->humanTurn) {
 		snprintf(buffer, sizeof(buffer),
       "Your turn - Select 1-3 sticks and press ENTER to confirm.\nSelected: %d",
@@ -127,7 +143,7 @@ static inline void	displayMessage(t_game *game)
       GetScreenHeight() * 0.9, 50, WHITE);
 		if (game->aiMessage[0])
 			DrawText(game->aiMessage, GetScreenWidth() * 0.05,
-        GetScreenHeight() * 0.85, 50, ORANGE);
+        	GetScreenHeight() * 0.85, 50, ORANGE);
 	}
 }
 
